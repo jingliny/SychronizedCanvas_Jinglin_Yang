@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        body{
+            background-color: darkgray;
+        }
+    </style>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<canvas id="myCanvas" width = "400" height = "400"></canvas>
+    
+</body>
+    <script>
+        console.log("hello");
+        for(var i=0;i<100;i++){
+            console.log(i);
+        }
+        
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext('2d');
+//        ctx.fillStyle = "#FF0000";
+//        ctx.fillStyle = "rgb(100,255,0)";
+//        var a = 60
+//        ctx.fillStyle = "rgb("+a+","+50+","+100+")";
+//        ctx.fillRect(20,20,80,120);
+        
+        for(var i=0;i<10000;i++){
+//            setInterval(randRect,1000);
+        }
+//        
+        canvas.addEventListener("mousemove",function(adsa){
+            var rect = canvas.getBoundingClientRect();
+            var mouseX = adsa.clientX - rect.left;
+            var mouseY = adsa.clientY - rect.top;
+            console.log(mouseX+","+mouseY);
+            randRect(mouseX,mouseY);
+        });
+        
+        
+
+        function randRect(w,h){
+            var r = Math.floor(Math.random()*255);
+            var g = Math.floor(Math.random()*255);
+            var b = Math.floor(Math.random()*255);
+            ctx.fillStyle = "rgb("+r+","+g+","+b+")";
+//            var w = Math.random()*canvas.width;
+//            var h = Math.random()*canvas.height;
+            var x = Math.random()*20+20;
+            var y = Math.random()*20+20;
+            ctx.fillRect(w,h,x,y);
+        }
+
+    </script>
+</html>

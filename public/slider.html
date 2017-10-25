@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<style>
+    body{
+        background-color: floralwhite;
+    }
+</style>
+    <script src="/socket.io/socket.io.js"></script>
+<body>
+
+    <input id = "mySlider" type="range"
+    onchange="setSlider(this.value);"
+    />
+</body>
+    <script>
+        console.log("hello");
+        
+        var socket = io.connect("/");
+        
+        function setSlider(sliderValue){
+            console.log(sliderValue);
+            socket.emit('clientSendSliderDataToServer',sliderValue);
+        }
+        
+        socket.on('serverSendSliderDataToClients',function(data){
+            console.log("received"+data+"from server");
+            var aSlider = document.getElementById("mySlider").value = data;
+        })
+    </script>
+</html>
