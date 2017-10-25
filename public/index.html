@@ -5,13 +5,16 @@
             background-color: darkgray;
         }
     </style>
+    <script src="/socket.io/socket.io.js"></script>
+
 <head>
-<title>Page Title</title>
+<title>Synchronized Canvas</title>
+
 </head>
 <body>
 
-<canvas id="myCanvas" width = "400" height = "400"></canvas>
-    
+<canvas id="myCanvas" width = "800" height = "800"></canvas>
+ 
 </body>
     <script>
         console.log("hello");
@@ -21,6 +24,7 @@
         
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext('2d');
+        var socket = io.connect();
 //        ctx.fillStyle = "#FF0000";
 //        ctx.fillStyle = "rgb(100,255,0)";
 //        var a = 60
@@ -42,6 +46,7 @@
         
 
         function randRect(w,h){
+//            var socket = io.connect('http://localhost');
             var r = Math.floor(Math.random()*255);
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
@@ -50,8 +55,20 @@
 //            var h = Math.random()*canvas.height;
             var x = Math.random()*20+20;
             var y = Math.random()*20+20;
+            var canvasOnServer = Math.floor(Math.random()*255);
             ctx.fillRect(w,h,x,y);
+            console.log(randRect);
+            socket.emit('clientSendPictureToServer',canvasOnServer);
         }
+    
+
+        socket.on('serverSendPictureToClients',function(picture){
+            console.log("received"+picture+"from server");
+            var aCanvas = document.getElementById("myCanvas").value = picture;
+        })
+        
+        
+   
 
     </script>
 </html>

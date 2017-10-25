@@ -9,15 +9,17 @@ app.use(express.static(__dirname + '/public'));
 
 server.listen(PORT);
 
-var sliderValueOnServer = 0;
 
-io.on('connection',function(socket){
+var canvasOnServer = Math.floor(Math.random()*255);
+
+
+io.sockets.on('connection',function(socket){
     console.log("client"+socket['id']+"connected");
-    socket.emit('serverSendSliderDataToClients',sliderValueOnServer);
+    socket.emit('serverSendPictureToClients',canvasOnServer);
     
-    socket.on('clientSendSliderDataToServer',function(data){
-        console.log(data);
-        sliderValueOnServer = data;
-        socket.broadcast.emit('serverSendSliderDataToClients',data);
+    socket.on('clientSendPictureToServer',function(picture){
+        console.log(picture);
+        canvasOnServer = picture;
+        socket.broadcast.emit('serverSendPictureToClients',picture);
     });
 });
